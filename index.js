@@ -11,9 +11,22 @@ app.engine('hbs', handlebars.engine({
    extname: 'hbs'
 }));
 
-app.get('/test', (req, res) => res.render('test'));
-app.get('/test2', (req, res) => res.render('test2'));
-
 app.get('/', (req, res) => res.render('index'));
+
+const arr = ['foo', 'bar', 'baz'];
+
+const connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'classicmodels',
+    password : 'bit',
+    database : 'classicmodels'
+});
+
+app.get('/db', (req, res) => {
+    connection.execute('SELECT productLine, textDescription FROM productlines', (err, rows) => {
+        const data = rows.map(row => row);
+        res.render('db', {data: data});
+    });
+})
 
 app.listen(port, () => console.log(`starting server on port ${port}`));
