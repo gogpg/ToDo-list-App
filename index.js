@@ -13,8 +13,7 @@ app.engine('hbs', handlebars.engine({
 
 app.get('/', (req, res) => res.render('index'));
 
-const arr = ['foo', 'bar', 'baz'];
-
+//DB start
 const connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'classicmodels',
@@ -28,5 +27,6 @@ app.get('/db', (req, res) => {
         res.render('db', {data: data});
     });
 })
+//DB end
 
 app.listen(port, () => console.log(`starting server on port ${port}`));
